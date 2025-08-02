@@ -7,7 +7,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of={"id"})
+@EqualsAndHashCode(of = {"id"})
 public class Post {
     private Long id;
     private long authorId;

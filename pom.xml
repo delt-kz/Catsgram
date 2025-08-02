@@ -21,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- блок настройки зависимостей проекта -->
+
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>

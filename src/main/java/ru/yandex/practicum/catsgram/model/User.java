@@ -7,7 +7,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of={"email"})
+@EqualsAndHashCode(of = {"email"})
 public class User {
     private Long id;
     private String username;
