@@ -75,11 +75,7 @@ public class UserService {
                 });
     }
 
-    public Optional<User> findUserById(long id) {
-        return users.values().stream()
-                .map(User::getId)
-                .filter(otherId -> otherId == id)
-                .map(users::get)
-                .findAny();
+    public Optional<User> findById(long id) {
+        return Optional.ofNullable(users.get(id));
     }
 }

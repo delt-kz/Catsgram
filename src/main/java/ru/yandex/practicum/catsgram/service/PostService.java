@@ -30,7 +30,7 @@ public class PostService {
         if (post.getDescription() == null || post.getDescription().isBlank()) {
             throw new ConditionsNotMetException("Описание не может быть пустым");
         }
-        userService.findUserById(post.getAuthorId()).orElseThrow(() ->
+        userService.findById(post.getAuthorId()).orElseThrow(() ->
                 new ConditionsNotMetException("«Автор с id = " + post.getAuthorId() + " не найден»"));
         post.setId(getNextId());
         post.setPostDate(Instant.now());
@@ -60,5 +60,9 @@ public class PostService {
                 .max()
                 .orElse(0);
         return ++currentMaxId;
+    }
+
+    public Optional<Post> findById(long id) {
+        return Optional.ofNullable(posts.get(id));
     }
 }
