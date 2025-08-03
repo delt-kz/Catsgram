@@ -17,8 +17,11 @@ public class PostController {
     }
 
     @GetMapping
-    public Collection<Post> findAll() {
-        return postService.findAll();
+    public Collection<Post> findAll(
+            @RequestParam Optional<Integer> from,
+            @RequestParam Optional<Integer> size,
+            @RequestParam Optional<String> sort) {
+        return postService.findAll(from, size, sort);
     }
 
     @PostMapping
