@@ -1,5 +1,6 @@
 package ru.yandex.practicum.catsgram.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
@@ -9,13 +10,10 @@ import java.time.Instant;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
     private final Map<Long, Post> posts = new HashMap<>();
     private final UserService userService;
-
-    public PostService(UserService userService) {
-        this.userService = userService;
-    }
 
     public Collection<Post> findAll(Optional<Integer> fromOpt,
                                     Optional<Integer> sizeOpt,
