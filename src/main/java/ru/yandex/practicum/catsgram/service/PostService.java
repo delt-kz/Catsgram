@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
 import ru.yandex.practicum.catsgram.model.Post;
+import ru.yandex.practicum.catsgram.model.SortOrder;
 
 import java.time.Instant;
 import java.util.*;
@@ -12,32 +13,20 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class PostService {
-    private final Map<Long, Post> posts = new HashMap<>();
     private final UserService userService;
 
-    public Collection<Post> findAll(Optional<Integer> fromOpt,
-                                    Optional<Integer> sizeOpt,
-                                    Optional<String> sortOpt) {
-        List<Post> subPosts;
-        int from = fromOpt.orElse(0);
-        int size = sizeOpt.orElse(10);
-        if (size < 0) {
-            size = 10;
-        }
-        if (sortOpt.isPresent() && sortOpt.get().equals("desc")) {
-            subPosts = posts.values().stream()
-                    .sorted(Comparator.comparing(Post::getPostDate).reversed())
-                    .skip(from)
-                    .limit(size)
-                    .toList();
-        } else {
-            subPosts = posts.values().stream()
-                    .sorted(Comparator.comparing(Post::getPostDate))
-                    .skip(from)
-                    .limit(size)
-                    .toList();
-        }
-        return subPosts;
+    private final Map<Long, Post> posts = new HashMap<>();
+    private final Comparator<Post> postDateComparator = Comparator.comparing(Post::getPostDate);
+
+
+    public Collection<Post> findAll(SortOrder sort, int from, int size) {
+        return posts.values()
+                .stream()
+                .sorted(sort.equals(SortOrder.ASCENDING) ?
+                        postDateComparator : postDateComparator.reversed())
+                .skip(from)
+                .limit(size)
+                .toList();
     }
 
     public Post create(Post post) {
